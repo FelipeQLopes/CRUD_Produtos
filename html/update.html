@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Update</title>
+    <link rel="stylesheet" href="../css/update.css" />
+    <link rel="stylesheet" href="../css/topnav.css" />
+    <link rel="stylesheet" href="../css/font.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../js/update.js" defer></script>
+</head>
+
+<body>
+    <div class="topnav">
+        <a href="home.html">Home</a>
+        <a href="create.html">Create</a>
+        <a href="read.html">Read</a>
+        <a class="active" href="update.html">Update</a>
+        <a href="delete.html">Delete</a>
+    </div>
+
+    <div class="main">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Pesquisar produto...">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        </div>
+
+        <div id="produtosContainer" class="cards-container"></div>
+    </div>
+
+    <!-- Popup / Modal -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <button id="closePopup" class="close">&times;</button>
+
+            <div class="popup-body">
+                <!-- LEFT: byte visualizer (decodificação passo-a-passo) -->
+                <div class="bytes-panel">
+                    <h2>Leitura dos Bytes</h2>
+
+                    <div class="bytes-section">
+                        <h3>Ícone</h3>
+                        <pre id="iconBytes" class="byte-seq">-</pre>
+                        <div id="iconDecoded" style="margin-top:8px;"></div>
+                    </div>
+
+                    <div class="bytes-section">
+                        <h3>Nome</h3>
+                        <pre id="nameBytes" class="byte-seq">-</pre>
+                        <p id="nameDecoded" class="decoded-text">-</p>
+                    </div>
+
+                    <div class="bytes-section">
+                        <h3>GTIN</h3>
+                        <pre id="gtinBytes" class="byte-seq">-</pre>
+                        <p id="gtinDecoded" class="decoded-text">-</p>
+                    </div>
+
+                    <div class="bytes-section">
+                        <h3>Descrição</h3>
+                        <pre id="descBytes" class="byte-seq">-</pre>
+                        <p id="descDecoded" class="decoded-text">-</p>
+                    </div>
+                </div>
+
+                <!-- RIGHT: form de edição (igual ao create) -->
+                <div class="form-panel">
+                    <h2>Editar Produto</h2>
+
+                    <form id="editForm">
+                        <div class="icon-selector" id="iconSelector">
+                            <i class="fa-solid fa-box icon-option"></i>
+                            <i class="fa-solid fa-bottle-water icon-option"></i>
+                            <i class="fa-solid fa-laptop icon-option"></i>
+                            <i class="fa-solid fa-utensils icon-option"></i>
+                            <i class="fa-solid fa-mobile-screen-button icon-option"></i>
+                            <i class="fa-solid fa-shirt icon-option"></i>
+                            <i class="fa-solid fa-couch icon-option"></i>
+                            <i class="fa-solid fa-car icon-option"></i>
+                            <i class="fa-solid fa-basket-shopping icon-option"></i>
+                            <i class="fa-solid fa-mug-saucer icon-option"></i>
+                            <i class="fa-solid fa-bolt icon-option"></i>
+                            <i class="fa-solid fa-lightbulb icon-option"></i>
+                            <i class="fa-solid fa-tv icon-option"></i>
+                            <i class="fa-solid fa-gamepad icon-option"></i>
+                            <i class="fa-solid fa-headphones icon-option"></i>
+                        </div>
+
+                        <div class="selected-icon" id="selectedIcon"><i class="fa-solid fa-box"></i></div>
+
+                        <label for="editNome">Produto</label>
+                        <input id="editNome" type="text" name="nomeProduto" required>
+
+                        <label for="editGtin">GTIN-13</label>
+                        <input id="editGtin" type="text" name="gtin" required pattern="\d{13}" minlength="13"
+                            inputmode="numeric">
+
+                        <label for="editDescricao">Descrição</label>
+                        <input id="editDescricao" type="text" name="descricao" required>
+
+                        <div style="margin-top:12px;">
+                            <button id="saveBtn" type="submit">Salvar Alterações</button>
+                        </div>
+                    </form>
+                </div>
+            </div> <!-- popup-body -->
+        </div> <!-- popup-content -->
+    </div> <!-- popup -->
+</body>
+
+</html>

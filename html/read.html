@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read</title>
+    <link rel="stylesheet" href="../css/read.css">
+    <link rel="stylesheet" href="../css/topnav.css">
+    <link rel="stylesheet" href="../css/font.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../js/read.js" defer></script>
+</head>
+
+<body>
+    <div class="topnav">
+        <a href="home.html">Home</a>
+        <a href="create.html">Create</a>
+        <a class="active" href="read.html">Read</a>
+        <a href="update.html">Update</a>
+        <a href="delete.html">Delete</a>
+    </div>
+
+    <div class="main">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Pesquisar produto...">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        </div>
+
+        <div class="cards-container" id="cardsContainer"></div>
+    </div>
+
+    <!-- Popup -->
+    <div id="popupOverlay" class="popup-overlay">
+        <div class="popup-content">
+            <button id="closePopup" class="close-btn">&times;</button>
+            <div class="popup-body">
+                <div class="popup-left">
+                    <h2>Leitura dos Bytes</h2>
+                    <div class="bytes-section">
+                        <h3>Ícone:</h3>
+                        <p class="byte-seq" id="iconBytes"></p>
+                        <div id="iconDecoded"></div>
+                    </div>
+
+                    <div class="bytes-section">
+                        <h3>Nome:</h3>
+                        <p class="byte-seq" id="nameBytes"></p>
+                        <p class="decoded-text" id="nameDecoded"></p>
+                    </div>
+
+                    <div class="bytes-section">
+                        <h3>GTIN:</h3>
+                        <p class="byte-seq" id="gtinBytes"></p>
+                        <p class="decoded-text" id="gtinDecoded"></p>
+                    </div>
+
+                    <div class="bytes-section">
+                        <h3>Descrição:</h3>
+                        <p class="byte-seq" id="descBytes"></p>
+                        <p class="decoded-text" id="descDecoded"></p>
+                    </div>
+                </div>
+
+                <div class="popup-right" id="productPreview">
+                    <!-- Card do produto selecionado -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

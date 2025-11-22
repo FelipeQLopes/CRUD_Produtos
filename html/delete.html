@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Delete / Gerenciar</title>
+    <link rel="stylesheet" href="../css/delete.css">
+    <link rel="stylesheet" href="../css/topnav.css">
+    <link rel="stylesheet" href="../css/font.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../js/delete.js" defer></script>
+</head>
+
+<body>
+    <div class="topnav">
+        <a href="home.html">Home</a>
+        <a href="create.html">Create</a>
+        <a href="read.html">Read</a>
+        <a href="update.html">Update</a>
+        <a class="active" href="delete.html">Delete</a>
+    </div>
+
+    <div class="main">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Pesquisar produto...">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        </div>
+
+        <div class="lists">
+            <div class="list">
+                <h2>🟢 Produtos Ativos</h2>
+                <div id="ativos" class="cards-container"></div>
+                <div class="list-footer">
+                    <button id="inactivateSelected" class="btn">Inativar selecionados</button>
+                    <button id="selectAllAtivos" class="btn ghost">Selecionar todos</button>
+                </div>
+            </div>
+
+            <div class="list">
+                <h2>🔴 Produtos Inativos</h2>
+                <div id="inativos" class="cards-container"></div>
+                <div class="list-footer">
+                    <button id="reactivateSelected" class="btn">Reativar selecionados</button>
+                    <button id="selectAllInativos" class="btn ghost">Selecionar todos</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

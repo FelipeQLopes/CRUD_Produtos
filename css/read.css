@@ -1,0 +1,159 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    min-height: 90vh;
+    background-color: #f9fefe;
+}
+
+.search-container {
+    position: relative;
+    width: 60%;
+    max-width: 600px;
+    margin-bottom: 30px;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 12px 40px 12px 15px;
+    border: 2px solid darkcyan;
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+}
+
+#searchInput:focus {
+    box-shadow: 0 0 5px darkcyan;
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: darkcyan;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 0.35fr));
+    gap: 25px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.card {
+    background-color: white;
+    border: 2px solid darkcyan;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card i {
+    font-size: 40px;
+    color: darkcyan;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    color: #004f4f;
+    margin: 8px 0;
+}
+
+.card p {
+    color: #444;
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 50, 50, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.popup-content {
+    background: #fff;
+    border-radius: 15px;
+    width: 85%;
+    max-width: 900px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #006666;
+}
+
+.popup-body {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.popup-left,
+.popup-right {
+    flex: 1;
+    min-width: 300px;
+}
+
+.bytes-section {
+    margin-bottom: 20px;
+}
+
+.byte-seq {
+    font-family: monospace;
+    background: #e9f7f7;
+    padding: 5px 10px;
+    border-radius: 8px;
+    color: #006666;
+    word-wrap: break-word;
+}
+
+.decoded-text {
+    margin-top: 8px;
+    color: #004f4f;
+}
+
+#productPreview .card {
+    border-color: #009999;
+    transform: none;
+    box-shadow: none;
+    margin-top: 40px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

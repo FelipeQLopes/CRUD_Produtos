@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Create</title>
+    <link rel="stylesheet" href="../css/create.css" />
+    <link rel="stylesheet" href="../css/topnav.css" />
+    <link rel="stylesheet" href="../css/font.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../js/create.js" defer></script>
+</head>
+
+<body>
+    <div class="topnav">
+        <a href="home.html">Home</a>
+        <a class="active" href="create.html">Create</a>
+        <a href="read.html">Read</a>
+        <a href="update.html">Update</a>
+        <a href="delete.html">Delete</a>
+    </div>
+
+    <div class="main">
+        <section class="form-area">
+            <form id="createForm" autocomplete="off" novalidate>
+                <div class="form-card">
+                    <h2>Novo Produto</h2>
+
+                    <label class="label">Escolha um ícone</label>
+                    <div class="icon-row">
+                        <div class="icon-selector" id="iconSelector">
+                            <i class="fa-solid fa-box icon-option" title="box"></i>
+                            <i class="fa-solid fa-bottle-water icon-option" title="bottle"></i>
+                            <i class="fa-solid fa-laptop icon-option" title="laptop"></i>
+                            <i class="fa-solid fa-utensils icon-option" title="utensils"></i>
+                            <i class="fa-solid fa-mobile-screen-button icon-option" title="mobile"></i>
+                            <i class="fa-solid fa-shirt icon-option" title="shirt"></i>
+                            <i class="fa-solid fa-couch icon-option" title="couch"></i>
+                            <i class="fa-solid fa-car icon-option" title="car"></i>
+                            <i class="fa-solid fa-basket-shopping icon-option" title="shopping"></i>
+                            <i class="fa-solid fa-mug-saucer icon-option" title="mug"></i>
+                            <i class="fa-solid fa-bolt icon-option" title="bolt"></i>
+                            <i class="fa-solid fa-lightbulb icon-option" title="lightbulb"></i>
+                            <i class="fa-solid fa-tv icon-option" title="tv"></i>
+                            <i class="fa-solid fa-gamepad icon-option" title="gamepad"></i>
+                            <i class="fa-solid fa-headphones icon-option" title="headphones"></i>
+                        </div>
+
+                        <div class="preview-icon" id="selectedIcon" aria-hidden="true">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                    </div>
+
+                    <label for="nomeProduto" class="label">Produto</label>
+                    <input id="nomeProduto" name="nomeProduto" type="text" placeholder="Insira o nome" required />
+
+                    <label for="gtin" class="label">GTIN-13</label>
+                    <input id="gtin" name="gtin" type="text" inputmode="numeric" placeholder="13 dígitos" required
+                        pattern="\d{13}" maxlength="13" />
+
+                    <label for="descricao" class="label">Descrição</label>
+                    <input id="descricao" name="descricao" type="text" placeholder="Insira a descrição" required />
+
+                    <div class="actions">
+                        <button id="submitBtn" type="submit">Criar Produto</button>
+                    </div>
+
+                    <div id="msg" class="msg"></div>
+                </div>
+            </form>
+        </section>
+
+        <div class="hex-viewer">
+            <h3>Visualização em Hex</h3>
+            <pre id="hexOutput" class="hex-output"></pre>
+        </div>
+
+
+    </div>
+</body>
+
+</html>
