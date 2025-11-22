@@ -1,6 +1,5 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-
     const iconSelector = document.getElementById("iconSelector");
     const iconOptions = iconSelector ? iconSelector.querySelectorAll(".icon-option") : [];
     const selectedIconPreview = document.getElementById("selectedIcon");
@@ -10,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const nomeInput = document.getElementById("nomeProduto");
     const gtinInput = document.getElementById("gtin");
     const descInput = document.getElementById("descricao");
-
 
     const TEXT_ENCODER = new TextEncoder();
     const TEXT_DECODER = new TextDecoder();
@@ -22,15 +20,12 @@ document.addEventListener("DOMContentLoaded", () => {
         return TEXT_DECODER.decode(arr || new Uint8Array());
     }
 
-
     function concatUint8(a, b) {
         const out = new Uint8Array(a.length + b.length);
         out.set(a, 0);
         out.set(b, a.length);
         return out;
     }
-
-
 
     const STORAGE_KEY = "produtosBin";
 
@@ -50,10 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function saveBuffer(u8) {
-
         localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(u8)));
     }
-
 
     function readUltimoId(buffer) {
         if (!buffer || buffer.length < 2) return 0;
@@ -62,7 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function writeUltimoId(buffer, id) {
-
         if (buffer.length < 2) {
             const tmp = new Uint8Array(2);
             tmp.set(buffer, 0);
@@ -73,12 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return buffer;
     }
 
-
     function getIconClassFromElem(el) {
         if (!el || !el.classList) return "fa-solid fa-box";
         return Array.from(el.classList).filter(c => c.startsWith("fa-")).join(" ") || "fa-solid fa-box";
     }
-
 
     let currentIconClass = "fa-solid fa-box";
     if (iconOptions.length > 0) {
@@ -87,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
         currentIconClass = getIconClassFromElem(iconOptions[0]);
         if (selectedIconPreview) selectedIconPreview.innerHTML = `<i class="${currentIconClass}"></i>`;
     }
-
 
     iconOptions.forEach(op => {
         op.addEventListener("click", () => {
@@ -101,28 +90,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    function buildRecordBytes(produto) {
 
+
+    function buildRecordBytes(produto) {
         const nomeBytes = bytesFromString(produto.nomeProduto || "");
         const gtinBytes = bytesFromString(produto.gtin || "");
         const descBytes = bytesFromString(produto.descricao || "");
         const iconBytes = bytesFromString(produto.icone || "");
-        const sizeData =
+
+
+        const dataPart =
             2 +
             2 + nomeBytes.length +
             2 + gtinBytes.length +
             2 + descBytes.length +
             2 + iconBytes.length;
 
-        const recordLen = 1 + 2 + sizeData;
+
+        const recordLen = 1 + 2 + dataPart;
+
+
+
+
         const record = new Uint8Array(recordLen);
         const rview = new DataView(record.buffer);
 
         let roffset = 0;
 
+
         record[roffset++] = produto.lapide ? 1 : 0;
 
-        rview.setUint16(roffset, sizeData); roffset += 2;
+
+        rview.setUint16(roffset, recordLen); roffset += 2;
+
 
         rview.setUint16(roffset, produto.id); roffset += 2;
 
@@ -146,13 +146,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (iconBytes.length) record.set(iconBytes, roffset);
         roffset += iconBytes.length;
 
-
         if (roffset !== recordLen) {
             console.warn("Tamanho do registro esperado:", recordLen, "tamanho escrito:", roffset);
         }
 
         return record;
     }
+
+
 
 
 
@@ -164,33 +165,29 @@ document.addEventListener("DOMContentLoaded", () => {
         const view = new DataView(buffer.buffer);
         let offset = startOffset;
         const lapide = buffer[offset]; offset += 1;
-        const sizeData = view.getUint16(offset); offset += 2;
+        const sizeTotal = view.getUint16(offset); offset += 2;
 
 
-        if (offset + sizeData > totalLen) {
+        if (startOffset + sizeTotal > totalLen) {
 
             return null;
         }
 
-        const recordStart = offset;
         try {
-            const id = view.getUint16(offset); offset += 2;
 
+            const id = view.getUint16(offset); offset += 2;
 
             const nomeLen = view.getUint16(offset); offset += 2;
             const nomeBytes = buffer.slice(offset, offset + nomeLen); offset += nomeLen;
             const nome = stringFromBytes(nomeBytes || new Uint8Array());
 
-
             const gtinLen = view.getUint16(offset); offset += 2;
             const gtinBytes = buffer.slice(offset, offset + gtinLen); offset += gtinLen;
             const gtin = stringFromBytes(gtinBytes || new Uint8Array());
 
-
             const descLen = view.getUint16(offset); offset += 2;
             const descBytes = buffer.slice(offset, offset + descLen); offset += descLen;
             const descricao = stringFromBytes(descBytes || new Uint8Array());
-
 
             const iconLen = view.getUint16(offset); offset += 2;
             const iconBytes = buffer.slice(offset, offset + iconLen); offset += iconLen;
@@ -208,14 +205,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 lapide
             };
 
-            const nextOffset = startOffset + 1 + 2 + sizeData;
+
+            const nextOffset = startOffset + sizeTotal;
             return { produto, nextOffset, recordBytes: buffer.slice(startOffset, nextOffset) };
         } catch (e) {
             console.error("Erro ao decodificar registro em offset", startOffset, e);
             return null;
         }
     }
-
 
     function renderHexView() {
         const buffer = loadBuffer();
@@ -228,10 +225,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const ultimoId = readUltimoId(buffer);
         out += `Último ID: ${ultimoId}\n\n`;
 
-
         out += "HEX COMPLETO:\n";
         out += gerarHexCompleto(buffer) + "\n\n";
-
 
         out += "Registros decodificados:\n\n";
 
@@ -252,9 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
             out += `Lápide: ${produto.lapide} (${produto.lapide === 0 ? "ativo" : "removido"})\n`;
             out += `Tamanho (bytes): ${recordBytes.length}\n`;
 
-
             out += gerarHexCompleto(recordBytes) + "\n";
-
 
             out += `> Nome: ${produto.nomeProduto}\n`;
             out += `> GTIN: ${produto.gtin}\n`;
@@ -270,34 +263,24 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
-
     function validarGtin(gtin) {
         return /^\d{13}$/.test(String(gtin).trim());
     }
 
-
     function appendProdutoToBuffer(produto) {
-
         let buffer = loadBuffer();
-
         if (!buffer || buffer.length < 2) buffer = new Uint8Array(2);
-
 
         const record = buildRecordBytes(produto);
 
-
         const newBuffer = concatUint8(buffer, record);
 
-
         const updated = writeUltimoId(newBuffer, produto.id);
-
 
         saveBuffer(updated);
 
         return updated;
     }
-
 
     if (form) {
         form.addEventListener("submit", (e) => {
@@ -324,7 +307,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-
             const buffer = loadBuffer();
             const ultimoId = readUltimoId(buffer);
             const novoId = ultimoId + 1;
@@ -338,19 +320,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 lapide: 0
             };
 
-
             appendProdutoToBuffer(produto);
 
-
             renderHexView();
-
 
             if (msgEl) {
                 msgEl.style.color = "#0a660a";
                 msgEl.textContent = "Produto criado com sucesso!";
                 setTimeout(() => (msgEl.textContent = ""), 3000);
             }
-
 
             form.reset();
             if (iconOptions.length > 0) {
@@ -362,10 +340,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-
     renderHexView();
-
-
 
 
     window.marcarProdutoRemovido = function (id) {
@@ -375,12 +350,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const view = new DataView(buffer.buffer);
             if (offset + 1 + 2 > buffer.length) break;
             const lapide = buffer[offset];
-            const sizeData = view.getUint16(offset + 1);
+            const sizeTotal = view.getUint16(offset + 1);
             const recordStart = offset;
             const idPos = offset + 1 + 2;
             if (idPos + 2 > buffer.length) break;
             const recId = view.getUint16(idPos);
-            const recordTotalLen = 1 + 2 + sizeData;
+            const recordTotalLen = sizeTotal;
             if (recId === id) {
 
                 buffer[recordStart] = 1;
@@ -410,7 +385,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
         return linhas.join("\n");
     }
-
-
 });
-

@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function loadBuffer() {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (!raw) {
-
             return new Uint8Array(2);
         }
         try {
@@ -37,43 +36,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+    // decodeRecordAt atualizado: sizeTotal = tamanho TOTAL do registro (gravado pelo create.js)
     function decodeRecordAt(buffer, startOffset) {
         const totalLen = buffer.length;
         if (startOffset >= totalLen) return null;
 
+        // precisa ao menos lápide(1) + size(2)
         if (startOffset + 3 > totalLen) return null;
 
         const view = new DataView(buffer.buffer);
         let offset = startOffset;
 
         const lapide = buffer[offset]; offset += 1;
-        const sizeData = readUint16(view, offset); offset += 2;
+        const sizeTotal = readUint16(view, offset); offset += 2;
 
-
-        if (offset + sizeData > totalLen) {
+        // sizeTotal é o tamanho TOTAL do registro (inclui lápide + size(2) + dados)
+        if (startOffset + sizeTotal > totalLen) {
             console.warn("Registro truncado em decodeRecordAt:", startOffset);
             return null;
         }
 
         try {
+            // id (2 bytes) está em offset atual (startOffset + 3)
             const id = readUint16(view, offset); offset += 2;
 
-
+            // nome
             const nomeLen = readUint16(view, offset); offset += 2;
             const nomeBytes = buffer.slice(offset, offset + nomeLen); offset += nomeLen;
             const nome = new TextDecoder().decode(nomeBytes || new Uint8Array());
 
-
+            // gtin
             const gtinLen = readUint16(view, offset); offset += 2;
             const gtinBytes = buffer.slice(offset, offset + gtinLen); offset += gtinLen;
             const gtin = new TextDecoder().decode(gtinBytes || new Uint8Array());
 
-
+            // descricao
             const descLen = readUint16(view, offset); offset += 2;
             const descBytes = buffer.slice(offset, offset + descLen); offset += descLen;
             const descricao = new TextDecoder().decode(descBytes || new Uint8Array());
 
-
+            // icone
             const iconLen = readUint16(view, offset); offset += 2;
             const iconBytes = buffer.slice(offset, offset + iconLen); offset += iconLen;
             const icone = new TextDecoder().decode(iconBytes || new Uint8Array()) || "fa-solid fa-box";
@@ -88,7 +90,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 ativo: lapide === 0
             };
 
-            const nextOffset = startOffset + 1 + 2 + sizeData;
+            // nextOffset = startOffset + sizeTotal (já que sizeTotal == recordLen)
+            const nextOffset = startOffset + sizeTotal;
             return { produto, nextOffset, recordBytes: buffer.slice(startOffset, nextOffset) };
         } catch (err) {
             console.error("Erro ao decodificar registro:", err);
@@ -163,6 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    // produtoToRecordBytes atualizado: grava uint16 com recordLen (tamanho TOTAL do registro)
     function produtoToRecordBytes(produto) {
         const encoder = new TextEncoder();
         const nomeBytes = encoder.encode(produto.nomeProduto || "");
@@ -170,34 +174,45 @@ document.addEventListener("DOMContentLoaded", () => {
         const descBytes = encoder.encode(produto.descricao || "");
         const iconBytes = encoder.encode(produto.icone || "");
 
-        const sizeData =
-            2 +
+        // dataPart = campos depois do header (id + 2+nome + 2+gtin + 2+desc + 2+icon)
+        const dataPart =
+            2 + // id
             2 + nomeBytes.length +
             2 + gtinBytes.length +
             2 + descBytes.length +
             2 + iconBytes.length;
 
-        const recordLen = 1 + 2 + sizeData;
+        // recordLen = lapide(1) + size(2) + dataPart
+        const recordLen = 1 + 2 + dataPart;
         const record = new Uint8Array(recordLen);
         const view = new DataView(record.buffer);
         let off = 0;
 
+        // lápide
         record[off++] = produto.lapide ? 1 : 0;
-        view.setUint16(off, sizeData); off += 2;
+
+        // escrevemos o tamanho TOTAL do registro (recordLen)
+        view.setUint16(off, recordLen); off += 2;
+
+        // id
         view.setUint16(off, produto.id); off += 2;
 
+        // nome
         view.setUint16(off, nomeBytes.length); off += 2;
         if (nomeBytes.length) record.set(nomeBytes, off);
         off += nomeBytes.length;
 
+        // gtin
         view.setUint16(off, gtinBytes.length); off += 2;
         if (gtinBytes.length) record.set(gtinBytes, off);
         off += gtinBytes.length;
 
+        // descricao
         view.setUint16(off, descBytes.length); off += 2;
         if (descBytes.length) record.set(descBytes, off);
         off += descBytes.length;
 
+        // icone
         view.setUint16(off, iconBytes.length); off += 2;
         if (iconBytes.length) record.set(iconBytes, off);
         off += iconBytes.length;
@@ -216,10 +231,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!produto || !popupOverlay) return;
         popupOverlay.style.display = "flex";
 
-
         let recordBytes = encontrarRecordBytesPorId(produto.id);
         if (!recordBytes) {
-
+            // fallback: gera bytes a partir do objeto (mesma ordem usada no create)
             recordBytes = produtoToRecordBytes(produto);
         }
 
@@ -227,9 +241,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const view = new DataView(uint8.buffer);
         let offset = 0;
 
-
         const lapide = uint8[offset++];
-        const sizeData = view.getUint16(offset); offset += 2;
+        const sizeTotal = view.getUint16(offset); offset += 2;
         const id = view.getUint16(offset); offset += 2;
 
         const nomeLen = view.getUint16(offset); offset += 2;
@@ -247,7 +260,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const iconLen = view.getUint16(offset); offset += 2;
         const iconBytes = uint8.slice(offset, offset + iconLen); offset += iconLen;
         const iconText = new TextDecoder().decode(iconBytes || new Uint8Array()) || "";
-
 
         const el = (idSel) => document.getElementById(idSel);
         if (el("iconBytes")) el("iconBytes").textContent = formatBytes(iconBytes || []);
@@ -297,7 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (searchInput) {
         searchInput.addEventListener("input", (e) => {
             const term = removerAcentos(e.target.value.toLowerCase());
-            const lista = buildProdutosList();
+            const lista = carregarProdutosBinarios();
             const filtered = lista.filter(p =>
                 removerAcentos((p.nomeProduto || "").toLowerCase()).includes(term) ||
                 removerAcentos((p.descricao || "").toLowerCase()).includes(term) ||
