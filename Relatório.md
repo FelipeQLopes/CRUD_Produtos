@@ -18,13 +18,15 @@ Os participantes receberam o seguinte roteiro para executar no sistema:
 
 Esse roteiro garante que o usuário passe por todas as operações do CRUD, além de visualizar a representação binária, que é o foco educacional do trabalho.
 
+---
+
 ### 2. Avaliação de Utilidade e Usabilidade (Escala Likert)
 Os usuários responderam às afirmativas abaixo, marcando um valor de 1 a 5:
-1️⃣ Discordo totalmente
-2️⃣ Discordo
-3️⃣ Neutro
-4️⃣ Concordo
-5️⃣ Concordo totalmente
+- 1️⃣ Discordo totalmente
+- 2️⃣ Discordo
+- 3️⃣ Neutro
+- 4️⃣ Concordo
+- 5️⃣ Concordo totalmente
 
 #### Afirmativas sobre Utilidade e Usabilidade:
 * Consegui executar todas as tarefas sem precisar de instruções adicionais.
@@ -39,14 +41,15 @@ Os usuários responderam às afirmativas abaixo, marcando um valor de 1 a 5:
 
 * De modo geral, estou satisfeito(a) com a experiência de uso da aplicação.
 
-### Resumo das Avaliações
+---
 
+### 3. Resumo das Avaliações
 
-| Afirmação                                                                | Média das Respostas |
-| :----------------------------------------------------------------------- | :-----------------: |
-| As operações do CRUD foram suficientes para demonstrar o funcionamento   |          5          |
-| Consegui executar todas as tarefas sem precisar de instruções adicionais |          5          |
-| A visualização em HEX facilita a compreensão da estrutura dos registros  |         4,9         |
-| O sistema ilustra bem o conceito de lápide e exclusão lógica             |         4,9         |
-| A interface é clara e fácil de navegar                                   |         4,9         |
-| De modo geral, estou satisfeito(a) com a experiência de uso da aplicação |          5          |
+| Afirmação | Média das Respostas |
+| :--- | :---: |
+| As operações do CRUD foram suficientes para demonstrar o funcionamento | 5 |
+| Consegui executar todas as tarefas sem precisar de instruções adicionais | 5 |
+| A visualização em HEX facilita a compreensão da estrutura dos registros | 4,9 |
+| O sistema ilustra bem o conceito de lápide e exclusão lógica | 4,9 |
+| A interface é clara e fácil de navegar | 4,9 |
+| De modo geral, estou satisfeito(a) com a experiência de uso da aplicação | 5 |
