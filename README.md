@@ -1,7 +1,7 @@
 # Relatório do Trabalho Prático 4 — CRUD de Produtos
 ## Integrantes do Grupo:
 
-- Davi Manoel
+- Davi Manoel Bernardes
 - Felipe Costa
 - Felipe Quites
 - Nayron Campos
