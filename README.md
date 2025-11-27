@@ -1,5 +1,5 @@
-Relatório do Trabalho Prático — CRUD de Produtos
-Integrantes do Grupo:
+# Relatório do Trabalho Prático — CRUD de Produtos
+### Integrantes do Grupo:
 
 - Davi Manoel
 - Felipe Costa
@@ -7,7 +7,7 @@ Integrantes do Grupo:
 - Nayron Campos
 
 
-Descrição Resumida do Sistema:
+### Descrição Resumida do Sistema:
 
 O trabalho consiste em uma página web interativa que implementa um CRUD completo de produtos, utilizando somente HTML, CSS e JavaScript.
 
@@ -23,14 +23,14 @@ Os campos de texto usam o formato:
 
 - [tamanho][dados]
 
-Funcionalidades:
+#### Funcionalidades:
 * Criar produtos via formulário
 * Listar todos os produtos
 * Editar um produto existente
 * Excluir através de lápide (não remove fisicamente)
 * Visualização do registro em HEX para inspeção
 
-Classes Criadas:
+#### Classes Criadas:
 
 * Produto
 Representa um produto e contém métodos para codificar e decodificar o registro binário.
@@ -48,7 +48,7 @@ Operações Especiais:
 - Cálculo do tamanho real de cada registro
 - Exibição completa dos bytes em formato HEX
 
-Checklist:
+### Checklist:
 
 [x] A página web com a visualização interativa do CRUD de produtos foi criada?
 Sim.
