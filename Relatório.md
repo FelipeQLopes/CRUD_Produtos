@@ -26,16 +26,27 @@ Os usuários responderam às afirmativas abaixo, marcando um valor de 1 a 5:
 4️⃣ Concordo
 5️⃣ Concordo totalmente
 
-#### Afirmativas sobre Utilidade:
-* A visualização em HEX facilita a compreensão da estrutura interna dos registros.
+#### Afirmativas sobre Utilidade e Usabilidade:
+* Consegui executar todas as tarefas sem precisar de instruções adicionais.
 
 * As operações do CRUD foram suficientes para demonstrar o funcionamento de arquivos sequenciais.
 
-* O sistema ilustra bem o conceito de lápide e exclusão lógica.
+* A visualização em HEX facilita a compreensão da estrutura interna dos registros.
 
-#### Afirmativas sobre Usabilidade:
-* Consegui executar todas as tarefas sem precisar de instruções adicionais.
+* O sistema ilustra bem o conceito de lápide e exclusão lógica.
 
 * A interface é clara e fácil de navegar.
 
 * De modo geral, estou satisfeito(a) com a experiência de uso da aplicação.
+
+### Resumo das Avaliações
+
+
+| Afirmação                                                                | Média das Respostas |
+| :----------------------------------------------------------------------- | :-----------------: |
+| As operações do CRUD foram suficientes para demonstrar o funcionamento   |          5          |
+| Consegui executar todas as tarefas sem precisar de instruções adicionais |          5          |
+| A visualização em HEX facilita a compreensão da estrutura dos registros  |         4,9         |
+| O sistema ilustra bem o conceito de lápide e exclusão lógica             |         4,9         |
+| A interface é clara e fácil de navegar                                   |         4,9         |
+| De modo geral, estou satisfeito(a) com a experiência de uso da aplicação |          5          |
