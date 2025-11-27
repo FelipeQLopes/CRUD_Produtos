@@ -1,5 +1,5 @@
 # Relatório do Trabalho Prático — CRUD de Produtos
-### Integrantes do Grupo:
+## Integrantes do Grupo:
 
 - Davi Manoel
 - Felipe Costa
@@ -23,14 +23,14 @@ Os campos de texto usam o formato:
 
 - [tamanho][dados]
 
-#### Funcionalidades:
+### Funcionalidades:
 * Criar produtos via formulário
 * Listar todos os produtos
 * Editar um produto existente
 * Excluir através de lápide (não remove fisicamente)
 * Visualização do registro em HEX para inspeção
 
-#### Classes Criadas:
+### Classes Criadas:
 
 * Produto
 Representa um produto e contém métodos para codificar e decodificar o registro binário.
@@ -41,7 +41,7 @@ Cuida do arquivo binário, leitura, escrita, atualização e exclusão lógica.
 * UIController
 Gerencia a interface web: tabela, formulários e interação com o usuário.
 
-Operações Especiais:
+### Operações Especiais:
 
 - Estrutura binária com campos de tamanho variável
 - Lápide para exclusão lógica
