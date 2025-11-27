@@ -21,22 +21,22 @@ document.addEventListener("DOMContentLoaded", () => {
         return Array.from(arr).map(b => b.toString(16).padStart(2, "0").toUpperCase()).join(" ");
     }
 
-    // --- Load / Save buffer (compatibilidade com versão antiga: arrays dentro de arrays) ---
+
     function loadBuffer() {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (!raw) {
-            return new Uint8Array(2); // header vazio (2 bytes para ultimoId)
+            return new Uint8Array(2);
         }
         try {
             const parsed = JSON.parse(raw);
 
-            // migração: se for antigo formato [ [arr], [arr], ... ] -> concatenar em único buffer
+
             if (Array.isArray(parsed) && parsed.length > 0 && Array.isArray(parsed[0])) {
-                let total = 2; // manter header (será sobrescrito)
+                let total = 2;
                 for (const a of parsed) total += a.length;
                 const out = new Uint8Array(total);
 
-                // inicializar header (0)
+
                 out[0] = 0; out[1] = 0;
                 let off = 2;
                 for (const a of parsed) {
@@ -65,11 +65,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return view.getUint16(offset);
     }
 
-    // --- Decodificador de registro (nova estrutura) ---
+
     function decodeRecordAt(buffer, startOffset) {
         const total = buffer.length;
         if (startOffset >= total) return null;
-        // precisa ao menos lápide(1) + size(2)
+
         if (startOffset + 3 > total) return null;
 
         const view = new DataView(buffer.buffer);
@@ -78,33 +78,33 @@ document.addEventListener("DOMContentLoaded", () => {
         const lapide = buffer[off]; off += 1;
         const sizeTotal = readUint16(view, off); off += 2;
 
-        // sizeTotal é o tamanho TOTAL do registro (inclui lápide + size(2) + dados)
+
         if (startOffset + sizeTotal > total) {
-            // registro truncado
+
             console.warn("Registro truncado em decodeRecordAt:", startOffset);
             return null;
         }
 
         try {
-            // id (2 bytes)
+
             const id = readUint16(view, off); off += 2;
 
-            // nome
+
             const nomeLen = readUint16(view, off); off += 2;
             const nomeBytes = buffer.slice(off, off + nomeLen); off += nomeLen;
             const nome = new TextDecoder().decode(nomeBytes || new Uint8Array());
 
-            // gtin
+
             const gtinLen = readUint16(view, off); off += 2;
             const gtinBytes = buffer.slice(off, off + gtinLen); off += gtinLen;
             const gtin = new TextDecoder().decode(gtinBytes || new Uint8Array());
 
-            // descricao
+
             const descLen = readUint16(view, off); off += 2;
             const descBytes = buffer.slice(off, off + descLen); off += descLen;
             const descricao = new TextDecoder().decode(descBytes || new Uint8Array());
 
-            // icone
+
             const iconLen = readUint16(view, off); off += 2;
             const iconBytes = buffer.slice(off, off + iconLen); off += iconLen;
             const icone = new TextDecoder().decode(iconBytes || new Uint8Array()) || "fa-solid fa-box";
@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return recs.map(r => ({ ...r.produto, _startOffset: r.startOffset, _nextOffset: r.nextOffset }));
     }
 
-    // --- UI render ---
+
     function renderList(container, items, tipo) {
         if (!container) return;
         container.innerHTML = "";
@@ -229,14 +229,14 @@ document.addEventListener("DOMContentLoaded", () => {
         renderTudo(searchInput ? searchInput.value : "");
     }
 
-    // --- Toggle lápide (marca ativo/inativo) escrevendo no próprio buffer ---
+
     function toggleActiveById(prodId, makeActive) {
         const buffer = loadBuffer();
         const recs = parseAllRecords();
         let modified = false;
         for (const r of recs) {
             if (r.produto && r.produto.id === prodId) {
-                // r.startOffset aponta para o byte da lápide
+
                 buffer[r.startOffset] = makeActive ? 0 : 1;
                 modified = true;
                 break;
@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderTudo(searchInput ? searchInput.value : "");
     }
 
-    // --- Eventos UI ---
+
     if (searchInput) {
         searchInput.addEventListener("input", (e) => {
             renderTudo(e.target.value);
@@ -287,6 +287,6 @@ document.addEventListener("DOMContentLoaded", () => {
     selectAllAtivosBtn?.addEventListener("click", () => selectAll("ativos"));
     selectAllInativosBtn?.addEventListener("click", () => selectAll("inativos"));
 
-    // inicializa
+
     renderTudo("");
 });
