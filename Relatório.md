@@ -56,10 +56,16 @@ Os usuários responderam às afirmativas abaixo, marcando um valor de 1 a 5:
 
 <div>
   <br>
-  <img src="./imagens/Afirmativa1.png" alt="1ª Afirmativa" width="410px" height="180px" style="object-fit: cover; object-position: center;" >
-  <img src="./imagens/Afirmativa2.png" alt="2ª Afirmativa" width="410px" height="180px" style="object-fit: cover; object-position: center;" >
-  <img src="./imagens/Afirmativa3.png" alt="3ª Afirmativa" width="410px" height="180px" style="object-fit: cover; object-position: center;" >
-  <img src="./imagens/Afirmativa4.png" alt="4ª Afirmativa" width="410px" height="180px" style="object-fit: cover; object-position: center;" >
-  <img src="./imagens/Afirmativa5.png" alt="5ª Afirmativa" width="410px" height="180px" style="object-fit: cover; object-position: center;" >
-  <img src="./imagens/Afirmativa6.png" alt="6ª Afirmativa" width="410px" height="180px" style="object-fit: cover; object-position: center;" >
+  <img src="./docs/Afirmativa1.png" alt="1ª Afirmativa" width="410px" height="180px" style="object-fit: cover; object-position: center;" >
+  <img src="./docs/Afirmativa2.png" alt="2ª Afirmativa" width="410px" height="180px" style="object-fit: cover; object-position: center;" >
+  <img src="./docs/Afirmativa3.png" alt="3ª Afirmativa" width="410px" height="180px" style="object-fit: cover; object-position: center;" >
+  <img src="./docs/Afirmativa4.png" alt="4ª Afirmativa" width="410px" height="180px" style="object-fit: cover; object-position: center;" >
+  <img src="./docs/Afirmativa5.png" alt="5ª Afirmativa" width="410px" height="180px" style="object-fit: cover; object-position: center;" >
+  <img src="./docs/Afirmativa6.png" alt="6ª Afirmativa" width="410px" height="180px" style="object-fit: cover; object-position: center;" >
+  <br>
 </div>
+
+---
+### Aqui está o pdf com todas as respostas:
+
+### [📋 Relatório PDF](./docs/Avaliação%20-%20TP4.pdf)
